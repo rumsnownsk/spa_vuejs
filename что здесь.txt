@@ -1,1 +1,8 @@
-тоже самое что и в уроках vue_compositional_api, только тестирование и можно удалить
+Laravel Creative
+
+Vue 3 composition api Vue Router Pinia подробный базовый курс в одном видео. REST API для vue
+
+https://www.youtube.com/watch?v=FQ13Hr9uy00
+
+4 часа 32 минуты
+
