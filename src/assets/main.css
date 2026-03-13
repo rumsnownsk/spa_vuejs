@@ -8,6 +8,7 @@
   --card-rotation: 0deg;
   --card-scale: 1;
   --glow-opacity: 0;
+  --tw-gradient-stops: #0f172a, #1e293b, #0c4a6e;
 }
 
 .card-3d {

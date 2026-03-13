@@ -23,6 +23,7 @@ watch(
       immediate: true // Опционально: запустить сразу при монтировании
     }
 )
+
 </script>
 
 <template>

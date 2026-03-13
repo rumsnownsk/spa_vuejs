@@ -75,7 +75,6 @@ const router = createRouter({
             component: ()=>import('@/pages/admin/tags/edit.vue')
         },
     ]
-
 })
 
 export default router
