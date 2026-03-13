@@ -12,6 +12,7 @@ export const usePostStore = defineStore(
                 id: null,
                 title: '',
                 body: '',
+                description:'',
                 slug: '',
                 topic_id: '',
                 tag_ids: []

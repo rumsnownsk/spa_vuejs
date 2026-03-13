@@ -7,7 +7,10 @@ import router from "@/router/router.js";
 
 import App from './App.vue'
 
-const pinia = createPinia()
+const pinia = createPinia({
+    devtools: import.meta.env.MODE !== 'production',
+    debug: false
+})
 
 createApp(App)
     .use(router)

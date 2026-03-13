@@ -35,7 +35,6 @@ const copiedPostId = ref(null);
 // Функция копирования в буфер обмена
 const copyToClipboard = async (post) => {
   try {
-    console.log(post.body)
     await navigator.clipboard.writeText(post.body);
     // Показываем индикатор успеха
     copiedPostId.value = post.id;
@@ -62,7 +61,7 @@ const formatDate = (dateString) => {
 
 <template>
   <div class="max-w-4xl mx-auto">
-    <h2 class="text-2xl font-bold mb-2 text-white">Лист всех записей</h2>
+    <h2 class="text-2xl font-bold mb-2 text-white justify-self-center">Лист всех записей</h2>
   </div>
   <!-- Листинг постов -->
   <div
@@ -71,7 +70,7 @@ const formatDate = (dateString) => {
       class="card-3d max-w-max bg-white rounded-2xl p-3 shadow-xl transform-gpu transition-all duration-500"
   >
     <div class="flex justify-between">
-      <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ post.title }}</h2>
+      <h2 class="text-lg font-bold text-gray-900 mb-4">{{ post.title }}</h2>
       <div
           :class="[
               'text-sm text-gray-500  ml-2',
@@ -172,15 +171,15 @@ const formatDate = (dateString) => {
           {{ tag.name }}
         </span>
       </div>
-      <div class="">
+      <div class="self-end">
         <div
             v-if="post.updated_at"
-            class="text-xs text-gray-500  ml-2">
-          Обновлён: {{ post.updated_at }}
+            class="text-xs text-gray-500 ml-2">
+          upd: {{ post.updated_at }}
         </div>
         <div
             v-if="post.created_at"
-            class="text-sm text-gray-500  ml-2">
+            class="text-sm text-gray-500 ml-2">
           Создан: {{ post.created_at }}
         </div>
       </div>

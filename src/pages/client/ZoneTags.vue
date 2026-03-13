@@ -40,7 +40,7 @@ watch(
 
 <template>
   <div class="p-6 max-w-4xl mx-auto">
-    <h2 class="text-2xl font-bold mb-6 text-white">Теги по выбранной темe:</h2>
+    <h2 class="text-2xl font-bold mb-6 text-white justify-self-center">Теги по выбранной темe:</h2>
 
     <transition-group
         name="tags-stagger"

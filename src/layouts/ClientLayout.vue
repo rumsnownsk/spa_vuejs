@@ -13,10 +13,10 @@ const topicStore = useTopicStore()
 const postStore = usePostStore()
 const authStore = useAuthStore()
 
-onMounted(() => {
-  topicStore.getTopics()
-  topicStore.init()
-  authStore.restoreAuth()
+onMounted(async () => {
+  await topicStore.init()
+  await topicStore.getTopics()
+  await authStore.restoreAuth()
 })
 
 const selectTopic = async (topic) => {
@@ -36,7 +36,9 @@ const closeAuthModal = () => {
   authStore.showAuthModal = false
 }
 
-
+const getImageUrl = (topicImage)=>{
+  return topicImage ? new URL(`/src/assets/images/${topicImage}`, import.meta.url).href : ''
+}
 
 
 </script>
@@ -46,7 +48,14 @@ const closeAuthModal = () => {
     <!-- Фиксированный хедер -->
     <header class="fixed top-0 left-0 right-0 bg-white/10 backdrop-blur-lg border-b border-white/20 z-50 h-20">
       <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <h1 class="text-cyan-300 uppercase text-2xl font-bold">Client Panel</h1>
+        <h1 class="text-cyan-300 uppercase text-3xl font-bold cursor-effect inline-flex items-center whitespace-nowrap">
+          Find Or Fail
+        </h1>
+        <div class="mx-5">
+          <p class="text-cyan-300 text-xl">
+            Быстрый поиск команды для консольной строки по ключевым обрывкам памяти
+          </p>
+        </div>
         <div class="flex items-center">
           <div
               v-if="authStore.isAuthenticated"
@@ -83,7 +92,7 @@ const closeAuthModal = () => {
               v-if="!isLoggedIn"
               @click="openModalWindow"
               type="button"
-              class=" cursor-pointer w-50 h-12 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-center"
+              class=" cursor-pointer w-30 h-12 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-center"
           >
             <p class="font-medium flex items-center justify-center gap-2">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -91,7 +100,7 @@ const closeAuthModal = () => {
                       d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 01-7 7 7 7 0 0114 0 7 7 0 01-7-7z"/>
               </svg>
 
-              Please, logged in
+              Logged in
             </p>
           </button>
           <button
@@ -136,11 +145,14 @@ const closeAuthModal = () => {
               <div
                   class="absolute inset-0 bg-gradient-to-r from-blue-500/0 to-cyan-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-              <!-- Иконка с 3D-эффектом -->
+              <!-- Иконка с 3D-эффектом @/assets/images/ -->
               <div
-                  class="w-10 h-10 mr-4 bg-gradient-to-b from-blue-600 to-blue-800 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 shadow-md shadow-blue-500/30 group-hover:shadow-lg group-hover:shadow-blue-400/50 group-hover:-translate-y-1 group-hover:scale-105 z-10">
-                <img class="w-6 h-6 text-cyan-300 group-hover:text-cyan-200 transition-colors duration-300"
-                     src="@/assets/images/linux.svg" alt="">
+                  class="w-10 h-10 mr-4 bg-gray-50 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 shadow-md shadow-blue-500/30 group-hover:shadow-lg group-hover:shadow-blue-400/50 group-hover:-translate-y-1 group-hover:scale-105 z-10">
+                <img
+                    :src="getImageUrl(topic.image)"
+                    class="p-1 text-cyan-300 group-hover:text-cyan-200 transition-colors duration-300"
+                      alt=""
+                >
               </div>
               <span class="text-lg font-medium text-white flex-1 truncate z-10">{{ topic.name }}</span>
               <span
@@ -272,5 +284,35 @@ const closeAuthModal = () => {
 
 .bg-gradient-to-b {
   background: linear-gradient(to bottom, var(--tw-gradient-stops));
+}
+
+.cursor-effect::after {
+  content: "|";
+  animation: cursor-fade 1.8s ease-in-out infinite;
+  position: absolute;
+  left: 100%;
+  margin-left: 0.25rem;
+  color: #22d3ee;
+  font-weight: bold;
+  line-height: 1;
+}
+
+@keyframes cursor-fade {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #22d3ee, #06b6d4, #0891b2);
+  background-size: 200% auto;
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 </style>
