@@ -2,7 +2,6 @@
 import {onMounted, reactive, ref} from "vue";
 import axios from "axios";
 import {useRoute} from "vue-router";
-import {usePostStore} from "@/store/post.js";
 
 defineOptions({
   name: 'Show'
