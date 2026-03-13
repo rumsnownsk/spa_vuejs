@@ -13,10 +13,10 @@ const topicStore = useTopicStore()
 const postStore = usePostStore()
 const authStore = useAuthStore()
 
-onMounted(() => {
-  topicStore.getTopics()
-  topicStore.init()
-  authStore.restoreAuth()
+onMounted(async () => {
+  await topicStore.init()
+  await topicStore.getTopics()
+  await authStore.restoreAuth()
 })
 
 const selectTopic = async (topic) => {
@@ -36,7 +36,9 @@ const closeAuthModal = () => {
   authStore.showAuthModal = false
 }
 
-
+const getImageUrl = (topicImage)=>{
+  return topicImage ? new URL(`/src/assets/images/${topicImage}`, import.meta.url).href : ''
+}
 
 
 </script>
@@ -136,11 +138,14 @@ const closeAuthModal = () => {
               <div
                   class="absolute inset-0 bg-gradient-to-r from-blue-500/0 to-cyan-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-              <!-- Иконка с 3D-эффектом -->
+              <!-- Иконка с 3D-эффектом @/assets/images/ -->
               <div
-                  class="w-10 h-10 mr-4 bg-gradient-to-b from-blue-600 to-blue-800 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 shadow-md shadow-blue-500/30 group-hover:shadow-lg group-hover:shadow-blue-400/50 group-hover:-translate-y-1 group-hover:scale-105 z-10">
-                <img class="w-6 h-6 text-cyan-300 group-hover:text-cyan-200 transition-colors duration-300"
-                     src="@/assets/images/linux.svg" alt="">
+                  class="w-10 h-10 mr-4 bg-gray-50 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 shadow-md shadow-blue-500/30 group-hover:shadow-lg group-hover:shadow-blue-400/50 group-hover:-translate-y-1 group-hover:scale-105 z-10">
+                <img
+                    :src="getImageUrl(topic.image)"
+                    class="p-1 text-cyan-300 group-hover:text-cyan-200 transition-colors duration-300"
+                      alt=""
+                >
               </div>
               <span class="text-lg font-medium text-white flex-1 truncate z-10">{{ topic.name }}</span>
               <span
