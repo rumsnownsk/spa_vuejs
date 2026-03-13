@@ -48,7 +48,14 @@ const getImageUrl = (topicImage)=>{
     <!-- Фиксированный хедер -->
     <header class="fixed top-0 left-0 right-0 bg-white/10 backdrop-blur-lg border-b border-white/20 z-50 h-20">
       <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <h1 class="text-cyan-300 uppercase text-2xl font-bold">Client Panel</h1>
+        <h1 class="text-cyan-300 uppercase text-3xl font-bold cursor-effect inline-flex items-center whitespace-nowrap">
+          Find Or Fail
+        </h1>
+        <div class="mx-5">
+          <p class="text-cyan-300 text-xl">
+            Быстрый поиск команды для консольной строки по ключевым обрывкам памяти
+          </p>
+        </div>
         <div class="flex items-center">
           <div
               v-if="authStore.isAuthenticated"
@@ -85,7 +92,7 @@ const getImageUrl = (topicImage)=>{
               v-if="!isLoggedIn"
               @click="openModalWindow"
               type="button"
-              class=" cursor-pointer w-50 h-12 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-center"
+              class=" cursor-pointer w-30 h-12 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-center"
           >
             <p class="font-medium flex items-center justify-center gap-2">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -93,7 +100,7 @@ const getImageUrl = (topicImage)=>{
                       d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 01-7 7 7 7 0 0114 0 7 7 0 01-7-7z"/>
               </svg>
 
-              Please, logged in
+              Logged in
             </p>
           </button>
           <button
@@ -277,5 +284,35 @@ const getImageUrl = (topicImage)=>{
 
 .bg-gradient-to-b {
   background: linear-gradient(to bottom, var(--tw-gradient-stops));
+}
+
+.cursor-effect::after {
+  content: "|";
+  animation: cursor-fade 1.8s ease-in-out infinite;
+  position: absolute;
+  left: 100%;
+  margin-left: 0.25rem;
+  color: #22d3ee;
+  font-weight: bold;
+  line-height: 1;
+}
+
+@keyframes cursor-fade {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #22d3ee, #06b6d4, #0891b2);
+  background-size: 200% auto;
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 </style>

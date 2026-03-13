@@ -61,7 +61,7 @@ const formatDate = (dateString) => {
 
 <template>
   <div class="max-w-4xl mx-auto">
-    <h2 class="text-2xl font-bold mb-2 text-white">Лист всех записей</h2>
+    <h2 class="text-2xl font-bold mb-2 text-white justify-self-center">Лист всех записей</h2>
   </div>
   <!-- Листинг постов -->
   <div
