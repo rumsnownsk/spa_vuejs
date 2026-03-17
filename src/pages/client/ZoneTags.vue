@@ -1,5 +1,5 @@
 <script setup>
-import {inject, onMounted, ref, watch} from "vue";
+import {inject, nextTick, onMounted, onUpdated, ref, watch} from "vue";
 import {useTagStore} from "@/store/tagStore.js";
 
 defineOptions({
@@ -11,6 +11,14 @@ const storeTag = useTagStore()
 const selectedTags = storeTag.selectedTags
 const loading = ref(false)
 const error = ref(null)
+const tagsSection = ref(null)
+
+const updateHeightTags = async () => {
+  await nextTick() // ждём перерисовки DOM
+  const tagsHeight = tagsSection.value?.offsetHeight || 0
+  // Устанавливаем CSS‑переменную с реальной высотой зоны тегов
+  document.documentElement.style.setProperty('--tags-section-height', `${tagsHeight}px`)
+}
 
 const toggleTag = (tagId) => {
   const index = selectedTags.indexOf(tagId)
@@ -23,8 +31,12 @@ const toggleTag = (tagId) => {
 
 onMounted(async () => {
   await storeTag.getTags()
+  await updateHeightTags()
+  window.addEventListener('resize', updateHeightTags)
 })
-
+onUpdated(async () => {
+  await updateHeightTags()
+})
 // Отслеживаем изменения массива tags
 watch(
     () => storeTag.tags, // функция-геттер для отслеживания
@@ -39,8 +51,8 @@ watch(
 </script>
 
 <template>
-  <div class="p-6 max-w-4xl mx-auto">
-    <h2 class="text-2xl font-bold mb-6 text-white justify-self-center">Теги по выбранной темe:</h2>
+  <div ref="tagsSection" class="tags-section p-3 max-w-4xl mx-auto flex-shrink-0">
+    <h2 class="text-2xl font-bold mb-6 text-white justify-self-center">Выбрать теги:</h2>
 
     <transition-group
         name="tags-stagger"
@@ -65,21 +77,15 @@ watch(
 </template>
 
 <style scoped>
-.tags-stagger-enter-active {
-  transition: all 0.4s ease;
+.tags-section {
+  flex: 0 0 auto; /* не сжимается, не растёт, высота по контенту */
 }
-
-.tags-stagger-leave-active {
-  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
-
-.tags-stagger-enter-from {
-  opacity: 0;
-  transform: translateX(-30px) rotate(-10deg);
-}
-
-.tags-stagger-leave-to {
-  opacity: 0;
-  transform: translateX(30px) rotate(10deg);
+.tags-section {
+  flex: 0 0 auto; /* не сжимается, не растёт, высота по контенту */
 }
 </style>

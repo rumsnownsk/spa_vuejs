@@ -9,10 +9,36 @@
   --card-scale: 1;
   --glow-opacity: 0;
   --tw-gradient-stops: #0f172a, #1e293b, #0c4a6e;
+  --header-height: 0;
+  --tags-section-height: 0px; /* будет рассчитано браузером */
+}
+
+body{
+  margin: 0 auto;
+  background-color: #0f172a;
+
 }
 
 .card-3d {
   transition-property: transform, box-shadow, opacity;
   transition-duration: 0.5s;
   transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/*.main-layout {*/
+/*  padding-top: calc(var(--header-height) + 1rem);*/
+/*  min-height: calc(100vh - var(--header-height));*/
+/*}*/
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden; /* Отключаем скролл на уровне страницы */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
