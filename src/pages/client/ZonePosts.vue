@@ -60,32 +60,36 @@ const formatDate = (dateString) => {
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto">
-    <h2 class="text-2xl font-bold mb-2 text-white justify-self-center">Лист всех записей</h2>
-  </div>
-  <!-- Листинг постов -->
-  <div
-      v-for="post in postStore.posts"
-      :key="post.id"
-      class="card-3d max-w-max bg-white rounded-2xl p-3 shadow-xl transform-gpu transition-all duration-500"
-  >
-    <div class="flex justify-between">
-      <h2 class="text-lg font-bold text-gray-900 mb-4">{{ post.title }}</h2>
+  <!-- Область с листингом постов (прокрутка только здесь) -->
+  <main ref="mainContent" class="main-content flex-1 overflow-y-auto min-h-0">
+    <div class="p-6 space-y-6">
+      <div class="max-w-4xl mx-auto">
+<!--        <h2 class="text-2xl font-bold mb-2 text-white justify-self-center">Лист всех записей</h2>-->
+      </div>
+
+      <!-- Листинг постов -->
       <div
-          :class="[
+          v-for="post in postStore.posts"
+          :key="post.id"
+          class="card-3d max-w-max bg-white rounded-2xl p-3 shadow-xl transform-gpu transition-all duration-500"
+      >
+        <div class="flex justify-between">
+          <h2 class="text-lg font-bold text-gray-900 mb-4">{{ post.title }}</h2>
+          <div
+              :class="[
               'text-sm text-gray-500  ml-2',
               post.topic?.name ? '' : 'text-red-500'
               ]"
-      >
-        {{ post.topic?.name || 'no topic' }}
-      </div>
-    </div>
-    <!-- Основной текст с оформлением -->
-    <div class="relative group">
-      <!-- Кликабельный блок текста -->
-      <p
-          @click="copyToClipboard(post)"
-          class="
+          >
+            {{ post.topic?.name || 'no topic' }}
+          </div>
+        </div>
+        <!-- Основной текст с оформлением -->
+        <div class="relative group">
+          <!-- Кликабельный блок текста -->
+          <p
+              @click="copyToClipboard(post)"
+              class="
       text-gray-700
       mb-4
       line-clamp-3
@@ -103,13 +107,13 @@ const formatDate = (dateString) => {
       relative
       z-10
     "
-          title="click to copy"
-      >
-        {{ post.body }}
-      </p>
+              title="click to copy"
+          >
+            {{ post.body }}
+          </p>
 
-      <!-- всплывающий элемент «Копировать» -->
-      <div class="absolute top-0 right-0
+          <!-- всплывающий элемент «Копировать» -->
+          <div class="absolute top-0 right-0
       opacity-0
       group-hover:opacity-100
       transition-opacity
@@ -117,7 +121,7 @@ const formatDate = (dateString) => {
       pointer-events-none
       z-20
     ">
-        <div class="
+            <div class="
       bg-gradient-to-r
       from-blue-500
       to-purple-600
@@ -135,14 +139,14 @@ const formatDate = (dateString) => {
       transition-transform
       duration-300
     ">
-          📋 copy
-        </div>
-      </div>
+              📋 copy
+            </div>
+          </div>
 
-      <!-- Индикатор успешного копирования -->
-      <div
-          v-if="copiedPostId === post.id"
-          class="
+          <!-- Индикатор успешного копирования -->
+          <div
+              v-if="copiedPostId === post.id"
+              class="
       absolute
       top-4
       left-1/2
@@ -158,34 +162,36 @@ const formatDate = (dateString) => {
       animate-pulse
       z-30
     "
-      >
-        ✅ Скопировано в буфер обмена!
-      </div>
-    </div>
-    <div class="flex justify-between items-center">
-      <div class="flex gap-2 flex-wrap">
+          >
+            ✅ Скопировано в буфер обмена!
+          </div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="flex gap-2 flex-wrap">
         <span
             v-for="tag in post.tags"
             class="px-3 py-1 text-sm bg-cyan-300 rounded-full"
         >
           {{ tag.name }}
         </span>
-      </div>
-      <div class="self-end">
-        <div
-            v-if="post.updated_at"
-            class="text-xs text-gray-500 ml-2">
-          upd: {{ post.updated_at }}
-        </div>
-        <div
-            v-if="post.created_at"
-            class="text-sm text-gray-500 ml-2">
-          Создан: {{ post.created_at }}
-        </div>
-      </div>
+          </div>
+          <div class="self-end">
+            <div
+                v-if="post.updated_at"
+                class="text-xs text-gray-500 ml-2">
+              upd: {{ post.updated_at }}
+            </div>
+            <div
+                v-if="post.created_at"
+                class="text-sm text-gray-500 ml-2">
+              Создан: {{ post.created_at }}
+            </div>
+          </div>
 
+        </div>
+      </div>
     </div>
-  </div>
+  </main>
 </template>
 
 
@@ -196,8 +202,8 @@ const formatDate = (dateString) => {
   perspective: 1000px;
   background: #c5e5d1;
   position: relative; /* Важно для корректной работы псевдоэлементов */
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.8),
-  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 2),
+  0 4px 20px -1px rgba(0, 0, 0, 1);
   transition: box-shadow 0.3s ease;
 }
 
@@ -226,20 +232,18 @@ const formatDate = (dateString) => {
   0 0 0 4px rgba(59, 130, 246, 0.1); /* Дополнительная подсветка по периметру */
 }
 
-/* Эффект поворота по оси Y */
-.hover\:rotate-y-10 {
-  transform: rotateY(-10deg) !important;
-}
-
-/* Градиентный фон */
-.bg-gradient-to-br {
-  background: linear-gradient(to bottom right, #0f172a, #1e293b, #0c4a6e);
-}
-
 /* Плавные переходы для 3D */
 .transform-gpu {
   transform: translateZ(0);
   backface-visibility: hidden;
   will-change: transform, box-shadow;
 }
+
+.main-content {
+  flex: 1 1 0; /* занимает всё оставшееся пространство */
+  min-height: 0; /* предотвращает переполнение в некоторых браузерах */
+  height: calc(100vh - var(--header-height) - var(--tags-section-height));
+  //height: calc(100vh - var(--header-height) - 50px);
+}
+
 </style>
