@@ -77,14 +77,22 @@ const handleSubmit = async () => {
       </div>
 
       <div class="mb-4">
-        <label class="block mb-2 font-semibold">Body</label>
-        <textarea
+        <label class="block mb-2 font-semibold">Command to Copy</label>
+        <input
             v-model="postStore.post.body"
             class="border border-gray-200 p-4 w-full"
             type="text"
             placeholder="body"/>
       </div>
 
+      <div class="mb-4">
+        <label class="block mb-2 font-semibold">Description</label>
+        <textarea
+            v-model="postStore.post.description"
+            class="border border-gray-200 p-4 w-full"
+            type="text"
+            placeholder="description"/>
+      </div>
       <!-- Выбор темы -->
       <div class="mb-4">
         <label class="block mb-2 font-semibold">Topic</label>

@@ -1,6 +1,5 @@
 import {defineStore} from "pinia";
-import {useRoute, useRouter} from "vue-router";
-import {reactive, ref} from "vue";
+import {useRouter} from "vue-router";
 import axiosInstance from "@/lib/axios.js";
 import router from "@/router/router.js";
 

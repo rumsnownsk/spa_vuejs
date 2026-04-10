@@ -3,9 +3,14 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import {createPinia} from "pinia";
 import router from "@/router/router.js";
+// import { fileURLToPath, URL } from 'url';
+
 import App from './App.vue'
 
-const pinia = createPinia()
+const pinia = createPinia({
+    devtools: import.meta.env.MODE !== 'production',
+    debug: false
+})
 
 createApp(App)
     .use(router)
